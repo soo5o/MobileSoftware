@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="75dp"
+        app:cardElevation="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="18dp"
+        >
+        <ImageView
+            android:id="@+id/addProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/account_circle"
+            android:scaleType="centerCrop"
+            />
+    </androidx.cardview.widget.CardView>
+    <EditText
+        android:id="@+id/inputNick"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="18dp"
+        android:textSize="14dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Nickname" />
+    <EditText
+        android:id="@+id/inputEmail"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="18dp"
+        android:textSize="14dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Email" />
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="18dp"
+        android:textSize="14dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Password" />
+    <EditText
+        android:id="@+id/inputConfirm"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="18dp"
+        android:textSize="14dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Confirm password" />
+    <!--가입하기-->
+    <Button
+        android:id="@+id/signBtn"
+        android:layout_width="290dp"
+        android:layout_height="62dp"
+        android:backgroundTint="#B1BDFF"
+        android:layout_marginBottom="18dp"
+        android:text="Create an account" />
+    <Button
+        android:id="@+id/signBack"
+        android:layout_width="290dp"
+        android:layout_height="62dp"
+        android:backgroundTint="#B9BAC1"
+        android:text="Back" />
+</LinearLayout>
