@@ -14,7 +14,7 @@ android {
     namespace 'com.example.mobilesoftware'
     compileSdk 34
 
-    defaultConfig {
+    defaultConfig
         namespace 'com.example.mobilesoftware'
         minSdk 24
         targetSdk 33
@@ -23,7 +23,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "GOOGLE_MAP_API_KEY", properties['google_map_api_key']
-        //manifestPlaceholders = [GOOGLE_MAP_API_KEY: google_map_api_key]
     }
     buildFeatures {
         buildConfig true
