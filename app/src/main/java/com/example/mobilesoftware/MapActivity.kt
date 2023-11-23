@@ -41,7 +41,7 @@ internal class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
 
-        currentMarker = setupMarker(LatLngEntity(37.5562,126.9724))  // default 서울역
+        currentMarker = setupMarker(LatLngEntity(37.5562, 126.9724))  // default 서울역
         currentMarker?.showInfoWindow()
     }
 
@@ -54,7 +54,8 @@ internal class MapActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     private fun setupMarker(locationLatLngEntity: LatLngEntity): Marker? {
 
-        val positionLatLng = LatLng(locationLatLngEntity.latitude!!,locationLatLngEntity.longitude!!)
+        val positionLatLng =
+            LatLng(locationLatLngEntity.latitude!!, locationLatLngEntity.longitude!!)
         val markerOption = MarkerOptions().apply {
             position(positionLatLng)
             title("위치")
@@ -73,22 +74,27 @@ internal class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onStart()
         mapView.onStart()
     }
+
     override fun onStop() {
         super.onStop()
         mapView.onStop()
     }
+
     override fun onResume() {
         super.onResume()
         mapView.onResume()
     }
+
     override fun onPause() {
         super.onPause()
         mapView.onPause()
     }
+
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
     }
+
     override fun onDestroy() {
         mapView.onDestroy()
         super.onDestroy()
@@ -105,5 +111,4 @@ internal class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         var latitude: Double?,
         var longitude: Double?
     )
-
 }
