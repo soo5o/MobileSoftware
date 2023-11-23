@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                                 Toast.makeText(baseContext, "전송된 메일로 이메일 인증이 되지 않았습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }else {
-                            Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(baseContext, "@string/logFailed", Toast.LENGTH_SHORT).show()
                         }
                     }
             }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">MobileSoftware</string>
+    <string name="login">로그인</string>
+    <string name="signUp">회원가입</string>
+    <string name="logFailed">로그인 실패</string>
+</resources>

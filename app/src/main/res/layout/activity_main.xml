@@ -51,13 +51,13 @@
         android:layout_height="62dp"
         android:backgroundTint="#B1BDFF"
         android:layout_marginBottom="18dp"
-        android:text="Login" />
+        android:text="@string/login" />
 
     <Button
         android:id="@+id/signBtn"
         android:layout_width="290dp"
         android:layout_height="62dp"
         android:backgroundTint="#B9BAC1"
-        android:text="Sign up" />
+        android:text="@string/signUp" />
 
 </LinearLayout>
