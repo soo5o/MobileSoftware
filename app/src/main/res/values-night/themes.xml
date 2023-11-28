@@ -15,6 +15,5 @@
     </style>
     <style name="CalenderViewDateCustomText">
         <item name="android:textColor">@drawable/selector</item>
-
     </style>
 </resources>

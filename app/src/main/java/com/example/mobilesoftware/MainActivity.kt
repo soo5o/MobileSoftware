@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
             signUpLauncher.launch(intent)
         }
 
-
         binding.loginBtn.setOnClickListener {
             //이메일, 비밀번호 로그인.......................
             val email = binding.inputEmail.text.toString()
