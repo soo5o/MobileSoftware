@@ -16,5 +16,6 @@
     <style name="CalenderViewDateCustomText">
         <item name="android:textColor">@drawable/selector</item>
     </style>
+
     <style name="Theme.MobileSoftware" parent="Base.Theme.MobileSoftware" />
 </resources>

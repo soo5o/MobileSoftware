@@ -38,6 +38,7 @@ class SignActivity : AppCompatActivity(){
                 inputStream!!.close()
                 inputStream = null
 
+
                 bitmap?.let {
                     binding.addProfile.setImageBitmap(bitmap)
                 } ?: let{
