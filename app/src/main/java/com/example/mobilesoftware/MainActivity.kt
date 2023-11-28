@@ -18,13 +18,13 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //아마 자동 로그인 기능. 일단 빼놓았음
-        /*        val requestLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+/*                val requestLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
                     ActivityResultContracts.StartActivityForResult()){
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                 }
                 if(MyApplication.checkAuth()){
                    //login
-                   val intent = Intent(this, RunActivity::class.java)  //main page로 이동
+                   val intent = Intent(this, HomeActivity::class.java)  //main page로 이동
                    requestLauncher.launch(intent)
                }else {
                    //logout
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                         if(task.isSuccessful){
                             if(MyApplication.checkAuth()){
                                 MyApplication.email = email
-                                val intent = Intent(this, RunActivity::class.java)
+                                val intent = Intent(this, HomeActivity::class.java)
                                 startActivity(intent)
                             }else {
                                 Toast.makeText(baseContext, "전송된 메일로 이메일 인증이 되지 않았습니다.", Toast.LENGTH_SHORT).show()
