@@ -14,7 +14,7 @@ android {
     namespace 'com.example.mobilesoftware'
     compileSdk 34
 
-    defaultConfig
+    defaultConfig{
         namespace 'com.example.mobilesoftware'
         minSdk 24
         targetSdk 33
