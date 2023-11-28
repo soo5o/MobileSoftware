@@ -41,7 +41,7 @@ class SignActivity : AppCompatActivity(){
                 bitmap?.let {
                     binding.addProfile.setImageBitmap(bitmap)
                 } ?: let{
-                    Log.d("kkang", "bitmap null")
+                    Log.d("runTo", "bitmap null")
                 }
             }catch (e: Exception){
                 e.printStackTrace()

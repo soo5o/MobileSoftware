@@ -4,4 +4,16 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <!--해당 일 색-->
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="colorControlActivated">#8784FF</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+    <!--요일 색-->
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="CalenderViewDateCustomText">
+        <item name="android:textColor">@drawable/selector</item>
+    </style>
 </resources>
