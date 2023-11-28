@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                         if(task.isSuccessful){
                             if(MyApplication.checkAuth()){
                                 MyApplication.email = email
-                                val intent = Intent(this, RunActivity::class.java)
+                                val intent = Intent(this, HomeActivity::class.java)
                                 startActivity(intent)
                             }else {
                                 Toast.makeText(baseContext, "전송된 메일로 이메일 인증이 되지 않았습니다.", Toast.LENGTH_SHORT).show()

@@ -22,22 +22,10 @@
             </intent-filter>
         </service>
         <activity
-            android:name=".CalendarActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CommunityActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MapActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RankActivity"
-            android:exported="false" />
-        <activity
             android:name=".SignActivity"
             android:exported="false" />
         <activity
-            android:name=".RunActivity"
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
