@@ -12,7 +12,6 @@
         android:dateTextAppearance="@style/CalenderViewDateCustomText"
         android:theme="@style/CalenderViewCustom"
         android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
-
     <!--    <TextView
             android:id="@+id/diaryTextView"
             android:layout_width="0dp"

@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    Toast.makeText(this, "BNav Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Navigation Error", Toast.LENGTH_SHORT).show()
                     false
                 }
             }
