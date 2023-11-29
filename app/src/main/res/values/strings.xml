@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MobileSoftware</string>
+    <string name="app_name">RunTo</string>
     <string name="login">Login</string>
     <string name="signUp">Sign up</string>
     <string name="logFailed">Login Failed</string>
