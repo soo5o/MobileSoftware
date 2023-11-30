@@ -14,15 +14,15 @@
         android:gravity="center"
         android:textSize="50dp"
         android:textStyle="bold"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="50dp"
         />
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="263dp"
         android:layout_height="50dp"
         android:backgroundTint="#F6F6F6"
-        android:hint="     Email"
+        android:hint="@string/logEmail"
         android:textSize="14dp"
         android:background="@color/black"
         android:strokeWidth="2"
@@ -35,7 +35,7 @@
         android:id="@+id/inputPassword"
         android:layout_width="263dp"
         android:layout_height="50dp"
-        android:hint="     Password"
+        android:hint="@string/logPass"
         android:textSize="14dp"
         android:backgroundTint="#F6F6F6"
         android:background="@color/black"
@@ -49,15 +49,18 @@
         android:id="@+id/loginBtn"
         android:layout_width="290dp"
         android:layout_height="62dp"
-        android:backgroundTint="#B1BDFF"
         android:layout_marginBottom="18dp"
-        android:text="@string/login" />
+        android:backgroundTint="#B1BDFF"
+        android:text="@string/login"
+        style="@style/myBtn" />
 
     <Button
         android:id="@+id/signBtn"
         android:layout_width="290dp"
         android:layout_height="62dp"
+        android:textColor="@color/white"
         android:backgroundTint="#B9BAC1"
-        android:text="@string/signUp" />
+        android:text="@string/signUp"
+        style="@style/myBtn" />
 
 </LinearLayout>

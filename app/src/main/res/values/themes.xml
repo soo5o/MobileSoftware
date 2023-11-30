@@ -2,9 +2,19 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MobileSoftware" parent="Theme.AppCompat.DayNight">
         <item name="android:statusBarColor" tools:targetApi="l">#14285C</item>
-        <item name="colorPrimary">#6F7BE4</item>
+        <item name="colorPrimary">#8784FF</item>
         <item name="colorSecondary">#FBD76A</item>
         <item name="colorOnSecondary">#4C8AB8</item>
+    </style>
+    <style name ="myBtn" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/my_btn</item>
+    </style>
+    <style name ="circleBtn">
+        <item name="backgroundTint">#8784FF</item>
+        <item name="android:background">@drawable/circle_btn</item>
     </style>
     <!--해당 일 색-->
     <style name="CalenderViewCustom" parent="Theme.AppCompat">

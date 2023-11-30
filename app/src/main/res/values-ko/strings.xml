@@ -5,4 +5,12 @@
     <string name="login">로그인</string>
     <string name="signUp">회원가입</string>
     <string name="logFailed">로그인 실패</string>
+    <string name="logEmail">\t\t\t이메일</string>
+    <string name="logPass">\t\t\t비밀번호</string>
+    <string name="signNickname">닉네임</string>
+    <string name="signEmail">이메일</string>
+    <string name="signPass">비밀번호 6자 이상</string>
+    <string name="signConfirm">비밀번호 확인</string>
+    <string name="createAccount">가입</string>
+    <string name="signBack">뒤로</string>
 </resources>
