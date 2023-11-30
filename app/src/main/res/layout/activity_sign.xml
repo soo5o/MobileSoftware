@@ -30,7 +30,7 @@
         android:textSize="14dp"
         android:ems="10"
         android:inputType="text"
-        android:hint="Nickname" />
+        android:hint="@string/signNickname" />
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="230dp"
@@ -39,7 +39,7 @@
         android:textSize="14dp"
         android:ems="10"
         android:inputType="text"
-        android:hint="Email" />
+        android:hint="@string/signEmail" />
     <EditText
         android:id="@+id/inputPassword"
         android:layout_width="230dp"
@@ -48,7 +48,7 @@
         android:textSize="14dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="Password" />
+        android:hint="@string/signPass" />
     <EditText
         android:id="@+id/inputConfirm"
         android:layout_width="230dp"
@@ -57,7 +57,7 @@
         android:textSize="14dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="Confirm password" />
+        android:hint="@string/signConfirm" />
     <!--가입하기-->
     <Button
         android:id="@+id/signBtn"
@@ -65,11 +65,15 @@
         android:layout_height="62dp"
         android:backgroundTint="#B1BDFF"
         android:layout_marginBottom="18dp"
-        android:text="Create an account" />
+        android:textColor="@color/white"
+        android:text="@string/createAccount"
+        style="@style/myBtn"/>
     <Button
         android:id="@+id/signBack"
         android:layout_width="290dp"
         android:layout_height="62dp"
+        android:textColor="@color/white"
         android:backgroundTint="#B9BAC1"
-        android:text="Back" />
+        android:text="@string/signBack"
+        style="@style/myBtn"/>
 </LinearLayout>

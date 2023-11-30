@@ -3,4 +3,12 @@
     <string name="login">Login</string>
     <string name="signUp">Sign up</string>
     <string name="logFailed">Login Failed</string>
+    <string name="logEmail">\t\t\tEmail</string>
+    <string name="logPass">\t\t\tPassword</string>
+    <string name="signNickname">Nickname</string>
+    <string name="signEmail">Email</string>
+    <string name="signPass">Password at least 6 characters</string>
+    <string name="signConfirm">Confirm Password</string>
+    <string name="createAccount">Create an account</string>
+    <string name="signBack">Back</string>
 </resources>
