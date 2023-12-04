@@ -11,4 +11,7 @@
     <string name="signConfirm">Confirm Password</string>
     <string name="createAccount">Create an account</string>
     <string name="signBack">Back</string>
+    <string name="open">oepned</string>
+    <string name="close">closed</string>
+    <string name="community">Community</string>
 </resources>

@@ -13,4 +13,7 @@
     <string name="signConfirm">비밀번호 확인</string>
     <string name="createAccount">가입</string>
     <string name="signBack">뒤로</string>
+    <string name="open">oepned</string>
+    <string name="close">closed</string>
+    <string name="community">커뮤니티</string>
 </resources>

@@ -3,21 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def google_map_api_key = properties.getProperty('google_map_api_key')
 
 android {
     namespace 'com.example.mobilesoftware'
     compileSdk 34
-
-    // local.properties 파일에서 값 읽기
-    def localPropertiesFile = rootProject.file("local.properties")
-    def localProperties = new Properties()
-
-    if (localPropertiesFile.exists()) {
-        localPropertiesFile.withInputStream { stream ->
-            localProperties.load(stream)
-        }
-    }
 
     defaultConfig{
         namespace 'com.example.mobilesoftware'
@@ -29,8 +24,7 @@ android {
 
 
         // local.properties에서 읽어온 API 키 사용
-        buildConfigField "String", "GOOGLE_MAP_API_KEY", "\"${localProperties['google_map_api_key']}\""
-        manifestPlaceholders = [GOOGLE_MAP_API_KEY: "\"${localProperties['google_map_api_key']}\""]
+        manifestPlaceholders = [google_map_api_key:google_map_api_key]
     }
     buildFeatures {
         buildConfig true
