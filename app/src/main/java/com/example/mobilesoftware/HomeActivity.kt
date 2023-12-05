@@ -1,5 +1,6 @@
 package com.example.mobilesoftware
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -65,7 +66,9 @@ class HomeActivity : AppCompatActivity() {
                     loadFragment(SettingFragment())
                 }
                 R.id.logout -> {
-                    loadFragment(LogoutFragment())
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
             }
 
