@@ -16,4 +16,7 @@
     <string name="open">oepned</string>
     <string name="close">closed</string>
     <string name="community">커뮤니티</string>
+    <string name="nav1">프로필 변경</string>
+    <string name="nav2">설정</string>
+    <string name="nav3">로그아웃</string>
 </resources>

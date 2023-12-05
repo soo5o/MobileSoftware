@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //아마 자동 로그인 기능. 일단 빼놓았음
-/*                val requestLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+                val requestLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
                     ActivityResultContracts.StartActivityForResult()){
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                 }
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                    //logout
                    val intent = Intent(this, MainActivity::class.java)  //login page로 이동
                    requestLauncher.launch(intent)
-               }*/
+               }
         //myCheckPermission(this)
         signUpLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) { result ->

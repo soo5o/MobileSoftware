@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.mobilesoftware.databinding.FragmentCommunityBinding
 
 class CommunityFragment : Fragment() {
 
@@ -12,8 +13,15 @@ class CommunityFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_community, container, false)
-    }
+        val binding = FragmentCommunityBinding.inflate(layoutInflater, container, false)
 
+        binding.extendedFab.setOnClickListener {
+            when (binding.extendedFab.isExtended) { // 글씨가 출력 여부
+                true -> binding.extendedFab.shrink() // 글씨 출력 X
+                false -> binding.extendedFab.extend() // 글씨 출력 O
+            }
+        }
+
+        return binding.root
+    }
 }
