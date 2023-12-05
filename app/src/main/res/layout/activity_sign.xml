@@ -59,7 +59,7 @@
         android:inputType="textPassword"
         android:hint="@string/signConfirm" />
     <!--가입하기-->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signBtn"
         android:layout_width="290dp"
         android:layout_height="62dp"
@@ -68,7 +68,7 @@
         android:textColor="@color/white"
         android:text="@string/createAccount"
         style="@style/myBtn"/>
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signBack"
         android:layout_width="290dp"
         android:layout_height="62dp"

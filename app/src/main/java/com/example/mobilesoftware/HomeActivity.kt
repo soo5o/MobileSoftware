@@ -66,6 +66,8 @@ class HomeActivity : AppCompatActivity() {
                     loadFragment(SettingFragment())
                 }
                 R.id.logout -> {
+                    MyApplication.auth.signOut()
+                    MyApplication.email = null
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()

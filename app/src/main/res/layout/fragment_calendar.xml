@@ -18,10 +18,36 @@
             android:theme="@style/CalenderViewCustom"
             android:background="@color/white"
             android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
-        <ImageView
-            android:id="@+id/recordImage"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/recordImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/recordTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="45dp"
+                android:textColor="#5C5C5C"
+                android:text="00:00"
+                android:visibility="invisible"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"/>
+            <TextView
+                android:id="@+id/recordDist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="45dp"
+                android:visibility="invisible"
+                android:textColor="#5C5C5C"
+                android:text="0 KM"
+                android:layout_marginTop="75dp"
+                android:layout_marginLeft="20dp"/>
+        </FrameLayout>
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabRemove"
@@ -32,6 +58,7 @@
         android:src="@drawable/ic_delete"
         app:borderWidth="0dp"
         android:visibility="invisible"
+        app:tint="@android:color/white"
         android:backgroundTint="#9896FF"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabEdit"
@@ -42,7 +69,7 @@
         android:src="@drawable/ic_edit"
         app:borderWidth="0dp"
         android:visibility="invisible"
-
+        app:tint="@android:color/white"
         android:backgroundTint="#9896FF"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabMain"
@@ -53,5 +80,6 @@
         android:src="@drawable/ic_add"
         app:borderWidth="0dp"
         android:visibility="invisible"
+        app:tint="@android:color/white"
         android:backgroundTint="#8784FF"/>
 </FrameLayout>

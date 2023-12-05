@@ -19,19 +19,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.FileOutputStream
+import kotlin.random.Random
+
 
 
 class CalendarFragment : Fragment() {
     var userID: String = "userID"
     lateinit var fname: String
-    lateinit var fabMain: FloatingActionButton   //floating action button
+    lateinit var fabMain: FloatingActionButton
     lateinit var fabEdit: FloatingActionButton
     lateinit var fabRemove: FloatingActionButton
     lateinit var recordImage: ImageView
     lateinit var calendarView: CalendarView
+    lateinit var recordDist: TextView
     private var isFabOpen = false
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         try {
@@ -53,7 +57,7 @@ class CalendarFragment : Fragment() {
                         recordImage.scaleType = ImageView.ScaleType.CENTER_CROP
                     }
                     // 이미지를 저장
-                    saveDiary(fname)
+                    saveRecord(fname)
                 }
             }
         } catch (e: Exception) {
@@ -73,6 +77,7 @@ class CalendarFragment : Fragment() {
         fabRemove = view.findViewById(R.id.fabRemove)
         recordImage = view.findViewById(R.id.recordImage)
         calendarView = view.findViewById(R.id.calendarView)
+        //recordDist = view.findViewById(R.id.recordDist) //나중에 해제
         //캘린더 클릭
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             fabMain.visibility = View.VISIBLE
@@ -91,7 +96,6 @@ class CalendarFragment : Fragment() {
     private fun checkDay(cYear: Int, cMonth: Int, cDay: Int, userID: String) {
         // 파일 이름 설정
         fname = "$userID$cYear-${cMonth + 1}$cDay.txt"
-
         try {
             val fileInputStream = requireContext().openFileInput(fname)
             // 이미지가 있는 경우 이미지를 로드
@@ -107,12 +111,9 @@ class CalendarFragment : Fragment() {
                 openGallery()
                 // 참고: 여기서 다이어리를 저장하지 않으므로 이미지가 사라지지 않습니다.
             }
-
             // 제거를 위한 클릭 리스너 설정
-            fabRemove.setOnClickListener {/*
-                recordImage.setImageResource(R.drawable.record_default)
-                recordImage.scaleType = ImageView.ScaleType.CENTER_INSIDE*/
-                removeDiary(fname)
+            fabRemove.setOnClickListener {
+                removeRecord(fname)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -123,20 +124,21 @@ class CalendarFragment : Fragment() {
             fabEdit.setOnClickListener {
                 openGallery()
                 // 갤러리를 열고 나서 다이어리를 저장하도록 수정
-                saveDiary(fname)
+                saveRecord(fname)
             }
 
             // 제거를 위한 클릭 리스너 설정
             fabRemove.setOnClickListener {
-                removeDiary(fname)
+                removeRecord(fname)
             }
         }
+
     }
 
 
     // 달력 내용 제거
     @SuppressLint("WrongConstant")
-    private fun removeDiary(readDay: String?) {
+    private fun removeRecord(readDay: String?) {
         try {
             requireContext().deleteFile(readDay)
             recordImage.setImageResource(R.drawable.record_default) //record_default
@@ -147,7 +149,7 @@ class CalendarFragment : Fragment() {
     }
     // 달력 내용 추가
     @SuppressLint("WrongConstant")
-    private fun saveDiary(readDay: String?) {
+    private fun saveRecord(readDay: String?) {
         val bitmap = (recordImage.drawable as? BitmapDrawable)?.bitmap
         if (bitmap != null) {
             var fileOutputStream: FileOutputStream? = null
@@ -161,7 +163,6 @@ class CalendarFragment : Fragment() {
             }
         }
     }
-
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"

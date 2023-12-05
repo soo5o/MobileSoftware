@@ -17,21 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //아마 자동 로그인 기능. 일단 빼놓았음
-                /*val requestLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
-                    ActivityResultContracts.StartActivityForResult()){
-                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                }
-                if(MyApplication.checkAuth()){
-                   //login
-                   val intent = Intent(this, HomeActivity::class.java)  //main page로 이동
-                   requestLauncher.launch(intent)
-               }else {
-                   //logout
-                   val intent = Intent(this, MainActivity::class.java)  //login page로 이동
-                   requestLauncher.launch(intent)
-               }*/
-        //myCheckPermission(this)
+        myCheckPermission(this)
+        if(MyApplication.checkAuth()){
+            startActivity(Intent(this, HomeActivity::class.java))
+        } else{
+            Log.d("runTo", "로그아웃 상태")
+        }
         signUpLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) { result ->
             // 회원가입 액티비티에서 돌아왔을 때의 처리
@@ -69,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                                 Toast.makeText(baseContext, "전송된 메일로 이메일 인증이 되지 않았습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }else {
-                            Toast.makeText(baseContext, "@string/logFailed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(baseContext, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
             }
