@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,15 +21,19 @@ import android.view.ViewGroup
 import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.mobilesoftware.MyApplication.Companion.storage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.File
 import java.io.FileOutputStream
 import kotlin.random.Random
 
-
-
 class CalendarFragment : Fragment() {
-    var userID: String = "userID"
+    val userId = MyApplication.auth.currentUser?.uid
+    lateinit var filePath: String
     lateinit var fname: String
     lateinit var fabMain: FloatingActionButton
     lateinit var fabEdit: FloatingActionButton
@@ -36,34 +41,8 @@ class CalendarFragment : Fragment() {
     lateinit var recordImage: ImageView
     lateinit var calendarView: CalendarView
     lateinit var recordDist: TextView
+    lateinit var recordTime: TextView
     private var isFabOpen = false
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        try {
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                val selectedImageUri: Uri? = data?.data
-                //비율 맞추기
-                if (selectedImageUri != null) {
-                    val bitmap: Bitmap? = if (Build.VERSION.SDK_INT < 28) {
-                        MediaStore.Images.Media.getBitmap(requireContext().contentResolver, selectedImageUri)
-                    } else {
-                        val source = ImageDecoder.createSource(requireContext().contentResolver, selectedImageUri)
-                        ImageDecoder.decodeBitmap(source)
-                    }
-                    // 로드한 이미지를 ImageView에 설정
-                    // 이미지를 꽉 채우도록 설정
-                    bitmap?.let {
-                        recordImage.setImageBitmap(bitmap)
-                        recordImage.scaleType = ImageView.ScaleType.CENTER_CROP
-                    }
-                    // 이미지를 저장
-                    saveRecord(fname)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,98 +56,122 @@ class CalendarFragment : Fragment() {
         fabRemove = view.findViewById(R.id.fabRemove)
         recordImage = view.findViewById(R.id.recordImage)
         calendarView = view.findViewById(R.id.calendarView)
-        //recordDist = view.findViewById(R.id.recordDist) //나중에 해제
+        recordDist = view.findViewById(R.id.recordDist) //나중에 해제
+        recordTime = view.findViewById(R.id.recordTime) //나중에 해제
+        val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+        { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    // 이미지 URI를 Glide를 통해 설정
+                    Glide.with(this)
+                        .load(uri)
+                        .centerCrop()
+                        .error(R.drawable.record_default)
+                        .into(recordImage)
+
+                    // 이미지 URI를 사용하여 파일 경로를 얻기
+                    val cursor = requireContext().contentResolver.query(
+                        uri,
+                        arrayOf(MediaStore.Images.Media.DATA),
+                        null,
+                        null,
+                        null
+                    )
+                    cursor?.moveToFirst().let {
+                        filePath=cursor?.getString(0) as String
+                        Log.d("runTo", "cursor filePath : $filePath")
+                    }
+                    saveRecord(fname)
+                }
+            }
+        }
         //캘린더 클릭
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             fabMain.visibility = View.VISIBLE
             fabEdit.visibility = View.VISIBLE
             fabRemove.visibility = View.VISIBLE
-            checkDay(year, month, dayOfMonth, userID)
+            //checkDay(year, month, dayOfMonth)
+            fname = "$userId$year-${month + 1}$dayOfMonth"
+            val storage = MyApplication.storage
+            val storageRef = storage.reference
+            val imgRef = storageRef.child("recordImages/${fname}.jpg")
+            imgRef.downloadUrl.addOnCompleteListener{ task ->
+                if(task.isSuccessful){
+                    Glide.with(this)
+                        .load(task.result)
+                        .centerCrop()
+                        .error(R.drawable.record_default)
+                        .into(recordImage)
+                }
+                // 편집을 위한 클릭 리스너 설정
+                fabEdit.setOnClickListener {
+                    requestGalleryLauncher.launch(Intent(Intent.ACTION_PICK).apply {
+                        type = MediaStore.Images.Media.CONTENT_TYPE
+                    })
+                }
+                // 제거를 위한 클릭 리스너 설정
+                fabRemove.setOnClickListener {
+                    removeRecord(fname)
+                }
+            } .addOnFailureListener{
+                // 이미지가 없을 경우 기본 이미지 설정
+                Glide.with(this)
+                    .load(R.drawable.record_default)
+                    .error(R.drawable.record_default)
+                    .into(recordImage)
+                // 편집을 위한 클릭 리스너 설정
+                fabEdit.setOnClickListener {
+                    requestGalleryLauncher.launch(Intent(Intent.ACTION_PICK).apply {
+                        type = MediaStore.Images.Media.CONTENT_TYPE
+                    })
+                }
+                // 제거를 위한 클릭 리스너 설정
+                fabRemove.setOnClickListener {
+                    removeRecord(fname)
+                }
+            }
         }
         fabMain.setOnClickListener {
             toggleFab()
         }
-        fabEdit.setOnClickListener {
-            openGallery()
-        }
     }
-    // 달력 내용 조회, 수정
-    private fun checkDay(cYear: Int, cMonth: Int, cDay: Int, userID: String) {
-        // 파일 이름 설정
-        fname = "$userID$cYear-${cMonth + 1}$cDay.txt"
-        try {
-            val fileInputStream = requireContext().openFileInput(fname)
-            // 이미지가 있는 경우 이미지를 로드
-            val bitmap = BitmapFactory.decodeStream(fileInputStream)
-            fileInputStream.close()
-            // 로드된 이미지를 표시
-            bitmap?.let {
-                recordImage.setImageBitmap(bitmap)
-                recordImage.scaleType = ImageView.ScaleType.CENTER_CROP
-            }
-            // 편집을 위한 클릭 리스너 설정
-            fabEdit.setOnClickListener {
-                openGallery()
-                // 참고: 여기서 다이어리를 저장하지 않으므로 이미지가 사라지지 않습니다.
-            }
-            // 제거를 위한 클릭 리스너 설정
-            fabRemove.setOnClickListener {
-                removeRecord(fname)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            // 이미지 파일이 없는 경우를 처리
-            recordImage.setImageResource(R.drawable.record_default)
-            recordImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            // 편집을 위한 클릭 리스너 설정
-            fabEdit.setOnClickListener {
-                openGallery()
-                // 갤러리를 열고 나서 다이어리를 저장하도록 수정
-                saveRecord(fname)
-            }
-
-            // 제거를 위한 클릭 리스너 설정
-            fabRemove.setOnClickListener {
-                removeRecord(fname)
-            }
-        }
-
-    }
-
-
     // 달력 내용 제거
-    @SuppressLint("WrongConstant")
-    private fun removeRecord(readDay: String?) {
-        try {
-            requireContext().deleteFile(readDay)
-            recordImage.setImageResource(R.drawable.record_default) //record_default
-            recordImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    private fun removeRecord(fname: String?) {
+        val storage = MyApplication.storage
+        val storageRef = storage.reference
+        val imgRef = storageRef.child("recordImages/${fname}.jpg")
+        imgRef.delete()
+            .addOnSuccessListener {
+                Log.d("runTo", "file remove success")
+                Glide.with(this)
+                    .load(R.drawable.record_default)
+                    .error(R.drawable.record_default)
+                    .into(recordImage)
+            }
+            .addOnFailureListener{
+                Log.d("runTo", "file remove error")
+            }
     }
     // 달력 내용 추가
-    @SuppressLint("WrongConstant")
-    private fun saveRecord(readDay: String?) {
-        val bitmap = (recordImage.drawable as? BitmapDrawable)?.bitmap
-        if (bitmap != null) {
-            var fileOutputStream: FileOutputStream? = null
-            try {
-                fileOutputStream = requireContext().openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS)
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                fileOutputStream?.close()
+    private fun saveRecord(fname: String?) {
+        val storage = MyApplication.storage
+        val storageRef = storage.reference
+        val imgRef = storageRef.child("recordImages/${fname}.jpg")
+        val file = Uri.fromFile(File(filePath)) //filePth 오류
+        Log.d("runTo", "fname : $fname, filePath : $filePath")
+        imgRef.putFile(file)
+            .addOnSuccessListener {
+                Log.d("runTo", "file save success")
             }
-        }
+            .addOnFailureListener{
+                Log.d("runTo", "file save error", it)
+            }
     }
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        galleryLauncher.launch(intent)
-    }
-
+/*    private fun openGallery() {
+        requestGalleryLauncher.launch(Intent(Intent.ACTION_PICK).apply {
+            type = MediaStore.Images.Media.CONTENT_TYPE
+        })
+    }*/
     private fun toggleFab() {
         //FAD 버튼 닫기
         if (isFabOpen) {
