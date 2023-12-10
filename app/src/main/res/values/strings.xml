@@ -6,6 +6,7 @@
     <string name="logEmail">\t\t\tEmail</string>
     <string name="logPass">\t\t\tPassword</string>
     <string name="signNickname">Nickname</string>
+    <string name="addProfile">Profile picture</string>
     <string name="signEmail">Email</string>
     <string name="signPass">Password at least 6 characters</string>
     <string name="signConfirm">Confirm Password</string>
@@ -13,6 +14,8 @@
     <string name="signBack">Back</string>
     <string name="open">oepned</string>
     <string name="close">closed</string>
+    <string name="edit">Edit</string>
+    <string name="editPass">Change Password</string>
     <string name="community">Community</string>
     <string name="nav1">Edit profile</string>
     <string name="nav2">Setting</string>

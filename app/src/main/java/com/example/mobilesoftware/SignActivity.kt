@@ -5,49 +5,49 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mobilesoftware.R
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.database.FirebaseDatabase
 import com.example.mobilesoftware.databinding.ActivitySignBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+import java.io.IOException
 
 class SignActivity : AppCompatActivity(){
     lateinit var binding: ActivitySignBinding
-
+    private lateinit var auth: FirebaseAuth
+    lateinit var filePath: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivitySignBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
         //gallery request launcher..................
         val requestGalleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult())
         {
-            try {
-                val calRatio = calculateInSampleSize(
-                    it.data!!.data!!,
-                    resources.getDimensionPixelSize(R.dimen.imgSize),
-                    resources.getDimensionPixelSize(R.dimen.imgSize)
-                )
-                val option = BitmapFactory.Options()
-                option.inSampleSize = calRatio
-
-                var inputStream = contentResolver.openInputStream(it.data!!.data!!)
-                val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-                inputStream!!.close()
-                inputStream = null
-
-                bitmap?.let {
-                    binding.addProfile.setImageBitmap(bitmap)
-                } ?: let{
-                    Log.d("runTo", "bitmap null")
-                }
-            }catch (e: Exception){
-                e.printStackTrace()
+            Glide
+                    .with(this)
+                    .load(it.data?.data)
+                    .apply(RequestOptions().override(150, 150))
+                    .centerCrop()
+                    .error(R.drawable.account_circle)
+                    .into(binding.addProfile)
+            val cursor = contentResolver.query(it.data?.data as Uri,
+                arrayOf<String>(MediaStore.Images.Media.DATA), null, null, null);
+            cursor?.moveToFirst().let {
+                filePath=cursor?.getString(0) as String
             }
+            Log.d("runTo", "filePath : $filePath")
         }
-        binding.addProfile.setOnClickListener {
+        binding.addProfileText.setOnClickListener {
             //gallery app........................
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             intent.type = "image/*"
@@ -59,7 +59,6 @@ class SignActivity : AppCompatActivity(){
             val email = binding.inputEmail.text.toString()
             val password = binding.inputPassword.text.toString()
             val confirm = binding.inputConfirm.text.toString()
-
             if(nick.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()){
                 Toast.makeText(this, "빈칸을 채워주세요", Toast.LENGTH_SHORT).show()
             }else if(password != confirm){  //비밀번호와 비밀번호 확인이 다를 경우
@@ -74,6 +73,9 @@ class SignActivity : AppCompatActivity(){
                         binding.inputPassword.text.clear()
                         binding.inputConfirm.text.clear()
                         if(task.isSuccessful){
+                            // 회원가입 성공 시 유저 정보를 Database에 저장
+                            val userId = MyApplication.auth.currentUser?.uid
+                            saveUserInfoToDatabase(userId, nick)
                             MyApplication.auth.currentUser?.sendEmailVerification()
                                 ?.addOnCompleteListener{ sendTask ->
                                     if(sendTask.isSuccessful){
@@ -88,6 +90,8 @@ class SignActivity : AppCompatActivity(){
                         }else {
                             Toast.makeText(baseContext, "회원가입 실패", Toast.LENGTH_SHORT).show()
                         }
+                    } .addOnFailureListener{
+                        Log.d("runTo", "버튼 왜 안눌림? 실패")
                     }
             }
         }
@@ -97,33 +101,35 @@ class SignActivity : AppCompatActivity(){
         }
 
     }
-    private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        try {
-            var inputStream = contentResolver.openInputStream(fileUri)
-
-            //inJustDecodeBounds 값을 true 로 설정한 상태에서 decodeXXX() 를 호출.
-            //로딩 하고자 하는 이미지의 각종 정보가 options 에 설정 된다.
-            BitmapFactory.decodeStream(inputStream, null, options)
-            inputStream!!.close()
-            inputStream = null
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        //비율 계산........................
-        val (height: Int, width: Int) = options.run { outHeight to outWidth }
-        var inSampleSize = 1
-        //inSampleSize 비율 계산
-        if (height > reqHeight || width > reqWidth) {
-
-            val halfHeight: Int = height / 2
-            val halfWidth: Int = width / 2
-
-            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
-                inSampleSize *= 2
+    private fun saveUserInfoToDatabase(userId: String?, nickname: String) {
+        val user = mapOf(
+            "uid" to userId,
+            "nickname" to nickname
+        )
+        Log.d("runTo", "save 함수로 넘어옴")
+        MyApplication.db.collection("users")
+            .document("$userId")
+            .set(user)
+            .addOnSuccessListener {
+                uploadImage(userId)
             }
-        }
-        return inSampleSize
+            .addOnFailureListener{e ->
+                Log.d("runTo", "data save error", e)
+            }
+    }
+    private fun uploadImage(docId: String?){
+        //add............................
+        val storage = MyApplication.storage
+        val storageRef = storage.reference
+        val imgRef = storageRef.child("images/${docId}.jpg")
+        val file = Uri.fromFile(File(filePath))
+        imgRef.putFile(file)
+            .addOnSuccessListener {
+                Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener{
+                Log.d("runTo", "file save error", it)
+            }
     }
 }

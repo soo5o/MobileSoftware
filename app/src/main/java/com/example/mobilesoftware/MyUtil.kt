@@ -30,8 +30,3 @@ fun myCheckPermission(activity: AppCompatActivity) {
         requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 }
-
-fun dateToString(date: Date): String {
-    val format = SimpleDateFormat("yyyy-MM-dd")
-    return format.format(date)
-}
