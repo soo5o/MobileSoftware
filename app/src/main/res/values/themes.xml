@@ -12,6 +12,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/my_btn</item>
     </style>
+    <style name ="circleBtn">
+        <item name="backgroundTint">#8784FF</item>
+        <!--<item name="android:background">@drawable/circle_btn</item>-->
+    </style>
     <!--해당 일 색-->
     <style name="CalenderViewCustom" parent="Theme.AppCompat">
         <item name="colorControlActivated">#8784FF</item>
