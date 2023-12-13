@@ -125,7 +125,6 @@ class SignActivity : AppCompatActivity(){
         val file = Uri.fromFile(File(filePath))
         imgRef.putFile(file)
             .addOnSuccessListener {
-                Toast.makeText(this, "save ok..", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener{
