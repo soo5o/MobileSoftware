@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
@@ -39,6 +38,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = 500
     private var currentMarker: Marker? = null
     private var polylineOptions: PolylineOptions? = null
+    private val MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+    private var isFirstLocationUpdate = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,13 +80,26 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap.uiSettings.isMyLocationButtonEnabled = false
 
         // 위치 업데이트 요청
-        startLocationUpdates()
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // 위치 권한이 이미 부여된 경우 위치 업데이트 요청
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
+        } else {
+            // 위치 권한이 없는 경우 권한 요청
+            requestLocationPermission()
+        }
 
         // 초기 위치를 표시하기 위해 맵이 준비될 때까지 대기하지 않도록 변경
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             location?.let {
                 val latLng = LatLng(location.latitude, location.longitude)
-
                 // 처음 위치 업데이트가 발생한 경우에만 현재 위치로 이동
                 if (isFirstLocationUpdate) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
@@ -111,7 +125,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-
     private fun initLocation() {
         fusedLocationClient = FusedLocationProviderClient(requireContext())
         locationRequest = LocationRequest.create().apply {
@@ -131,8 +144,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // 권한 체크 및 위치 업데이트 요청
         checkPermissions()
     }
-
-    private var isFirstLocationUpdate = true
 
     private fun onLocationChanged(location: Location) {
         val latLng = LatLng(location.latitude, location.longitude)
@@ -206,7 +217,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun showPermissionAlertDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("권한 필요")
-            .setMessage("현재 위치를 사용하려면 위치 권한이 필요합니다. 설정에서 권한을 부여해주세요.")
+            .setMessage("현재 위치를 사용하려면 위치 권한이 필요합니다. 설정에서 권한을 부여해 주세요.")
             .setPositiveButton("확인") { dialog, _ ->
                 dialog.dismiss()
             }
@@ -232,11 +243,33 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun startLocationUpdates() {
-        if (locationCallback != null) {
+        // 위치 권한 확인
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // 위치 권한이 이미 부여된 경우 위치 업데이트 요청
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
                 Looper.getMainLooper()
+            )
+        } else {
+            // 위치 권한이 없는 경우 권한 요청
+            requestLocationPermission()
+        }
+    }
+
+    private fun requestLocationPermission() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // 권한이 이전에 거부되었지만 사용자에게 설명이 필요한 경우
+            showPermissionAlertDialog()
+        } else {
+            // 권한을 요청
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
             )
         }
     }
