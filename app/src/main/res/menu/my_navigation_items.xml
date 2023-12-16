@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/map"
-        android:title="map"
-        android:icon="@drawable/ic_map" />
-    <item android:id="@+id/calendar"
-        android:title="calendar"
-        android:icon="@drawable/ic_calendar" />
-    <item android:id="@+id/run"
-        android:title="run"
-        android:icon="@drawable/ic_run" />
-    <item android:id="@+id/ranking"
-        android:title="ranking"
-        android:icon="@drawable/ic_rank" />
-    <item android:id="@+id/community"
-        android:title="community"
-        android:icon="@drawable/ic_community" />
+    <item
+        android:id="@+id/map"
+        android:icon="@drawable/ic_map"
+        android:title="map" />
+    <item
+        android:id="@+id/calendar"
+        android:icon="@drawable/ic_calendar"
+        android:title="calendar" />
+    <item
+        android:id="@+id/run"
+        android:icon="@drawable/ic_run"
+        android:title="run" />
+    <item
+        android:id="@+id/ranking"
+        android:icon="@drawable/ic_rank"
+        android:title="ranking" />
+    <item
+        android:id="@+id/community"
+        android:icon="@drawable/ic_community"
+        android:title="community" />
 </menu>

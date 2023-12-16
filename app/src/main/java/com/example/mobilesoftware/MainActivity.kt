@@ -15,16 +15,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         myCheckPermission(this)
-        if(MyApplication.checkAuth()){
+        if (MyApplication.checkAuth()) {
             startActivity(Intent(this, HomeActivity::class.java))
-        } else{
+        } else {
             Log.d("runTo", "로그아웃 상태")
         }
         signUpLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) { result ->
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
             // 회원가입 액티비티에서 돌아왔을 때의 처리
             if (result.resultCode == RESULT_OK) {
                 // 회원가입이 성공하면 처리
@@ -43,23 +44,27 @@ class MainActivity : AppCompatActivity() {
             //이메일, 비밀번호 로그인.......................
             val email = binding.inputEmail.text.toString()
             val password = binding.inputPassword.text.toString()
-            if(email.isEmpty() || password.isEmpty()){
+            if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "빈칸을 채워주세요", Toast.LENGTH_SHORT).show()
-            }else{
-                Log.d("runTo","email:$email, password:$password")
+            } else {
+                Log.d("runTo", "email:$email, password:$password")
                 MyApplication.auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this){ task ->
+                    .addOnCompleteListener(this) { task ->
                         binding.inputEmail.text.clear()
                         binding.inputPassword.text.clear()
-                        if(task.isSuccessful){
-                            if(MyApplication.checkAuth()){
+                        if (task.isSuccessful) {
+                            if (MyApplication.checkAuth()) {
                                 MyApplication.email = email
                                 val intent = Intent(this, HomeActivity::class.java)
                                 startActivity(intent)
-                            }else {
-                                Toast.makeText(baseContext, "전송된 메일로 이메일 인증이 되지 않았습니다.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(
+                                    baseContext,
+                                    "전송된 메일로 이메일 인증이 되지 않았습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                        }else {
+                        } else {
                             Toast.makeText(baseContext, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }

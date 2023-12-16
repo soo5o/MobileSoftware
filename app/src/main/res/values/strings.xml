@@ -23,4 +23,7 @@
     <string name="nav1">Edit profile</string>
     <string name="nav2">Setting</string>
     <string name="nav3">Logout</string>
+    <string name="write">Post</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
 </resources>

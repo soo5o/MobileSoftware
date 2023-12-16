@@ -6,13 +6,15 @@
         <item name="colorSecondary">#FBD76A</item>
         <item name="colorOnSecondary">#4C8AB8</item>
     </style>
-    <style name ="myBtn" parent="Theme.Material3.DayNight.NoActionBar">
+
+    <style name="myBtn" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/my_btn</item>
     </style>
-    <style name ="circleBtn">
+
+    <style name="circleBtn">
         <item name="backgroundTint">#8784FF</item>
         <!--<item name="android:background">@drawable/circle_btn</item>-->
     </style>
@@ -25,8 +27,10 @@
     <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="CalenderViewDateCustomText">
         <item name="android:textColor">@drawable/selector</item>
     </style>
+
     <style name="Theme.MobileSoftware" parent="Base.Theme.MobileSoftware" />
 </resources>

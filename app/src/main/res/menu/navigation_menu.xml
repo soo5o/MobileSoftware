@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/edit_profile"
+    <item
+        android:id="@+id/edit_profile"
         android:icon="@drawable/account_circle"
-        android:title="@string/nav1"/>
+        android:title="@string/nav1" />
 
-    <item android:id="@+id/setting"
+    <item
+        android:id="@+id/setting"
         android:icon="@drawable/setting"
-        android:title="@string/nav2"/>
+        android:title="@string/nav2" />
 
-    <item android:id="@+id/logout"
+    <item
+        android:id="@+id/logout"
         android:icon="@drawable/logout"
-        android:title="@string/nav3"/>
+        android:title="@string/nav3" />
 </menu>

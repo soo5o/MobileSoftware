@@ -15,6 +15,7 @@ class RecordDialogFragment : DialogFragment() {
     lateinit var saveBtn: Button
     lateinit var recordText: EditText
     private lateinit var fname: String
+
     companion object {
         private const val ARG_DATA = "fname"
         fun newInstance(data: String): RecordDialogFragment {
@@ -25,6 +26,7 @@ class RecordDialogFragment : DialogFragment() {
             return fragment
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +34,7 @@ class RecordDialogFragment : DialogFragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_record_dialog, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // 다이얼로그의 닫기 버튼
@@ -45,7 +48,7 @@ class RecordDialogFragment : DialogFragment() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val content = document.data?.get("content").toString()
-                    if(content != "null"){
+                    if (content != "null") {
                         recordText.setText(content)
                     }
                 } else {
@@ -56,12 +59,14 @@ class RecordDialogFragment : DialogFragment() {
                 Log.d("runTo", "get failed with ", exception)
             }
         saveBtn.setOnClickListener {
-            if(recordText.text.toString().isEmpty()){
+            if (recordText.text.toString().isEmpty()) {
                 MyApplication.db.collection("record")
                     .document("$fname")
-                    .update(mapOf(
-                        "content" to FieldValue.delete()
-                    ))
+                    .update(
+                        mapOf(
+                            "content" to FieldValue.delete()
+                        )
+                    )
             }
             saveStore()
             dismiss() // 다이얼로그를 닫습니다.
@@ -71,7 +76,8 @@ class RecordDialogFragment : DialogFragment() {
             dismiss() // 다이얼로그를 닫습니다.
         }
     }
-    private fun saveStore(){
+
+    private fun saveStore() {
         //add............................
         val data = mapOf(
             "content" to recordText.text.toString()
@@ -82,7 +88,7 @@ class RecordDialogFragment : DialogFragment() {
             .addOnSuccessListener {
                 Log.d("runTo", "record data save successful")
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Log.d("runTo", "record data save error", it)
             }
 

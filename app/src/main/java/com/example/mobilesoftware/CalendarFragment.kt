@@ -1,16 +1,9 @@
 package com.example.mobilesoftware
 
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context.MODE_NO_LOCALIZED_COLLATORS
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -20,17 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.getSystemService
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.example.mobilesoftware.MyApplication.Companion.storage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
-import java.io.FileOutputStream
-import kotlin.random.Random
 
 class CalendarFragment : Fragment() {
     val userId = MyApplication.auth.currentUser?.uid

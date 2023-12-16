@@ -1,9 +1,10 @@
+package com.example.mobilesoftware
+
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.mobilesoftware.R
 import com.example.mobilesoftware.databinding.FragmentRunBinding
 import android.media.MediaPlayer
 import android.os.AsyncTask

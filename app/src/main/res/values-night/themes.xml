@@ -4,7 +4,8 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
-    <style name ="myBtn" parent="Theme.Material3.DayNight.NoActionBar">
+
+    <style name="myBtn" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16dp</item>
         <item name="android:textColor">@color/white</item>
@@ -19,6 +20,7 @@
     <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="CalenderViewDateCustomText">
         <item name="android:textColor">@drawable/selector</item>
     </style>

@@ -1,11 +1,11 @@
+package com.example.mobilesoftware
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mobilesoftware.ProfileData
-import com.example.mobilesoftware.R
 
 class ProfileAdapter(private val context: Context?, private val datas: MutableList<ProfileData>) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
 

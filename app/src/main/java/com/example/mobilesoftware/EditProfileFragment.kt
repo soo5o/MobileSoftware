@@ -2,7 +2,6 @@ package com.example.mobilesoftware
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,7 +16,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.AppCompatButton
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.ktx.auth
@@ -32,13 +30,14 @@ class EditProfileFragment : Fragment() {
     lateinit var password: EditText
     lateinit var confirm: EditText
     lateinit var profileImg: ImageView
-    lateinit var changeProfileText:TextView
+    lateinit var changeProfileText: TextView
     lateinit var changeProfileBtn: Button
     lateinit var filePath: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +45,7 @@ class EditProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileImg = view.findViewById(R.id.addProfile)
@@ -78,7 +78,7 @@ class EditProfileFragment : Fragment() {
                         null
                     )
                     cursor?.moveToFirst().let {
-                        filePath=cursor?.getString(0) as String
+                        filePath = cursor?.getString(0) as String
                         Log.d("runTo", "cursor filePath : $filePath")
                     }
                 }
@@ -97,10 +97,10 @@ class EditProfileFragment : Fragment() {
             uploadImage(userId)
         }
         editNick.setOnClickListener {  //닉네임 변경은 되지만 네비게이션 헤더의 닉네임은 변경되지 않음 *수정*
-            if(changeNick.text.toString().isEmpty()){
+            if (changeNick.text.toString().isEmpty()) {
                 //닉네임이 입력되지 않은 경우
                 Toast.makeText(requireContext(), "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 //닉네임 변경
                 val userId = MyApplication.auth.currentUser?.uid
                 MyApplication.db.collection("users")
@@ -112,14 +112,12 @@ class EditProfileFragment : Fragment() {
             }
         }
         editPass.setOnClickListener {
-            if(password.text.toString().isEmpty() || confirm.text.toString().isEmpty()){
+            if (password.text.toString().isEmpty() || confirm.text.toString().isEmpty()) {
                 //비밀번호가 입력되지 않은 경우
                 Toast.makeText(requireContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-            }
-            else if(password.text.toString() != confirm.text.toString()){
+            } else if (password.text.toString() != confirm.text.toString()) {
                 Toast.makeText(requireContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-            }
-            else{
+            } else {
                 //비밀번호 변경
                 val newPassword = password.text.toString()
                 password.text.clear()
@@ -128,8 +126,9 @@ class EditProfileFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Log.d("runTo", "User password updated.")
-                            Toast.makeText(requireContext(), "비밀번호가 변경되었습니다", Toast.LENGTH_SHORT).show()
-                        } else{
+                            Toast.makeText(requireContext(), "비밀번호가 변경되었습니다", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
                             Log.d("runTo", "User password updated failed.")
                         }
                     }
@@ -138,13 +137,13 @@ class EditProfileFragment : Fragment() {
         //이미지를 불러오는 부분
         val imgRef = MyApplication.storage.reference.child("images/${userId}.jpg")
 
-        imgRef.downloadUrl.addOnCompleteListener{ task ->
-            if(task.isSuccessful){
+        imgRef.downloadUrl.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 Glide.with(this)
                     .load(task.result)
                     .into(profileImg)
             }
-        } .addOnFailureListener{
+        }.addOnFailureListener {
             Log.d("runTo", "imgref file save error", it)
         }
         //얘는 우선 db 데이터 값을 가져오기 위해 있는 것
@@ -164,7 +163,8 @@ class EditProfileFragment : Fragment() {
                 Log.d("runTo", "get failed with ", exception)
             }
     }
-    private fun uploadImage(docId: String?){
+
+    private fun uploadImage(docId: String?) {
         //add............................
         val storage = MyApplication.storage
         val storageRef = storage.reference
@@ -174,7 +174,7 @@ class EditProfileFragment : Fragment() {
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "프로필 사진이 변경되었습니다", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Log.d("runTo", "file save error", it)
             }
     }
