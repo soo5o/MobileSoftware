@@ -12,7 +12,10 @@
     <string name="signConfirm">Confirm Password</string>
     <string name="createAccount">Create an account</string>
     <string name="signBack">Back</string>
-    <string name="open">oepned</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="recordhint">Please write the content</string>
+    <string name="open">opened</string>
     <string name="close">closed</string>
     <string name="edit">Edit</string>
     <string name="editPass">Change Password</string>

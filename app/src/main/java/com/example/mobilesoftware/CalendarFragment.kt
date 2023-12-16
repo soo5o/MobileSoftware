@@ -23,6 +23,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat.getSystemService
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.mobilesoftware.MyApplication.Companion.storage
@@ -40,8 +41,6 @@ class CalendarFragment : Fragment() {
     lateinit var fabRemove: FloatingActionButton
     lateinit var recordImage: ImageView
     lateinit var calendarView: CalendarView
-    lateinit var recordDist: TextView
-    lateinit var recordTime: TextView
     private var isFabOpen = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,8 +55,6 @@ class CalendarFragment : Fragment() {
         fabRemove = view.findViewById(R.id.fabRemove)
         recordImage = view.findViewById(R.id.recordImage)
         calendarView = view.findViewById(R.id.calendarView)
-        recordDist = view.findViewById(R.id.recordDist) //나중에 해제
-        recordTime = view.findViewById(R.id.recordTime) //나중에 해제
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
         { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -113,6 +110,11 @@ class CalendarFragment : Fragment() {
                 fabRemove.setOnClickListener {
                     removeRecord(fname)
                 }
+                recordImage.setOnClickListener{
+                    //dialog open
+                    val RecordDialogFragment = RecordDialogFragment.newInstance(fname)
+                    RecordDialogFragment.show(requireActivity().supportFragmentManager, "RecordDialogFragment")
+                }
             } .addOnFailureListener{
                 // 이미지가 없을 경우 기본 이미지 설정
                 Glide.with(this)
@@ -167,11 +169,6 @@ class CalendarFragment : Fragment() {
                 Log.d("runTo", "file save error", it)
             }
     }
-/*    private fun openGallery() {
-        requestGalleryLauncher.launch(Intent(Intent.ACTION_PICK).apply {
-            type = MediaStore.Images.Media.CONTENT_TYPE
-        })
-    }*/
     private fun toggleFab() {
         //FAD 버튼 닫기
         if (isFabOpen) {
