@@ -145,8 +145,6 @@ class RunFragment : Fragment() {
     }
 
     private fun updateDistanceTextView(realTimeDistance: Float = distance) {
-        val formattedDistance = String.format("%.2f", realTimeDistance)
-        binding.distanceText.text = "Distance: $formattedDistance m"
 
         // Update real-time distance TextView
         val formattedRealTimeDistance = String.format("%.2f", realTimeDistance)
