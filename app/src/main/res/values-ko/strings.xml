@@ -27,4 +27,6 @@
     <string name="write">게시하기</string>
     <string name="title">제목</string>
     <string name="content">내용</string>
+    <string name="alarm">알람</string>
+    <string name="lang">언어</string>
 </resources>
