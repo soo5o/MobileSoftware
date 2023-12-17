@@ -26,7 +26,7 @@ class RankFragment : Fragment() {
         datas.apply {
             add(ProfileData(name = "mary", age = 1))
             add(ProfileData(name = "jenny", age = 2))
-            add(ProfileData(name = "jhon", age = 3))
+            add(ProfileData(name = "tomas", age = 3))
             add(ProfileData(name = "ruby", age = 4))
             add(ProfileData(name = "yuna", age = 5))
         }
