@@ -26,4 +26,6 @@
     <string name="write">Post</string>
     <string name="title">Title</string>
     <string name="content">Content</string>
+    <string name="alarm">Alarm</string>
+    <string name="lang">Language</string>
 </resources>
