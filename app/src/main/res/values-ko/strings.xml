@@ -29,4 +29,8 @@
     <string name="content">내용</string>
     <string name="alarm">알람</string>
     <string name="lang">언어</string>
+    <string name="lang1">영어</string>
+    <string name="lang2">한국어</string>
+    <string name="comment">댓글</string>
+    <string name="commenthint">댓글을 작성해주세요.</string>
 </resources>

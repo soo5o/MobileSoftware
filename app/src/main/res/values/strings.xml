@@ -28,4 +28,8 @@
     <string name="content">Content</string>
     <string name="alarm">Alarm</string>
     <string name="lang">Language</string>
+    <string name="lang1">English</string>
+    <string name="lang2">Korean</string>
+    <string name="comment">Comments</string>
+    <string name="commenthint">Write a comment.</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.mobilesoftware
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mobilesoftware.databinding.ActivityDetailBinding
 import java.util.Calendar
@@ -27,6 +28,7 @@ class DetailActivity : AppCompatActivity() {
             binding.titleTextView.text = it.title
             binding.timestampTextView.text = getFormattedTime(it.timestamp)
             binding.editContentTextView.text = it.content
+            binding.nicknameTextView.text = it.nickname
         }
     }
 

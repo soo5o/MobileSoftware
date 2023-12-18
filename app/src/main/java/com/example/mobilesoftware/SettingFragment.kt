@@ -48,25 +48,13 @@ class SettingFragment : Fragment() {
             }
         }
 
-        val languages = arrayOf("English", "Korean")
+        val languages = arrayOf(
+            getString(R.string.lang1),
+            getString(R.string.lang2)
+        )
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         languageSpinner.adapter = adapter
-
-        languageSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parentView: AdapterView<*>?,
-                selectedItemView: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedLanguage = languages[position]
-                showToast("Selected language: $selectedLanguage")
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>?) {
-            }
-        })
 
         alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         timer = Timer()

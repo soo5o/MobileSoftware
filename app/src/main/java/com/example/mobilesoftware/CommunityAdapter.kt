@@ -37,6 +37,9 @@ class CommunityAdapter(
             val timestampTextView = itemView.findViewById<TextView>(R.id.timestampTextView)
             timestampTextView.text = getFormattedTime(post.timestamp)
 
+            val nicknameTextView = itemView.findViewById<TextView>(R.id.nicknameTextView)
+            nicknameTextView.text = post.nickname
+
             // 아이템 클릭 시
             itemView.setOnClickListener {
                 // 클릭된 아이템 정보를 다음 화면으로 전달
