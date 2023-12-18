@@ -15,7 +15,6 @@
         android:layout_marginBottom="5dp"
         app:cardCornerRadius="75dp"
         app:cardElevation="0dp">
-        <!--이미지 뷰 소스 나중에 변경하기 -> firestore에서 가져온 사진 uri-->
         <ImageView
             android:id="@+id/addProfile"
             android:layout_width="match_parent"

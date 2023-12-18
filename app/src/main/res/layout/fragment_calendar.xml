@@ -75,7 +75,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:backgroundTint="#9896FF"
-        android:src="@drawable/ic_edit"
+        android:src="@drawable/ic_photo"
         android:visibility="invisible"
         app:borderWidth="0dp"
         app:tint="@android:color/white" />
