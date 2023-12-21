@@ -50,10 +50,11 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/languageSpinner"
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            android:text="@string/lang_change"
+            android:id="@+id/language_eng_btn" />
     </LinearLayout>
 </LinearLayout>

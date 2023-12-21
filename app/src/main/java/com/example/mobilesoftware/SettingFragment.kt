@@ -11,23 +11,23 @@ import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Switch
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import java.util.Timer
 import java.util.TimerTask
 import android.content.res.Configuration
-import android.content.res.Resources
+import android.preference.PreferenceManager
+import android.util.Log
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import java.util.Locale
 
 class SettingFragment : Fragment() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var timer: Timer
     private val ALARM_INTERVAL = 30 * 60 * 1000 // 30분을 밀리초로 변환
-    //private val ALARM_INTERVAL = 5 * 1000 // 5분을 밀리초로 변환 (테스트용)
+    private val PREF_SELECTED_LANGUAGE = "selectedLanguage"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,25 +36,22 @@ class SettingFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_setting, container, false)
 
         val switchSetting = rootView.findViewById<Switch>(R.id.alarmSwitch)
-        val languageSpinner = rootView.findViewById<Spinner>(R.id.languageSpinner)
 
         switchSetting.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) { // Switch ON
+            if (isChecked) {
                 showToast("Alarm is ON")
-                setRepeatingAlarm(requireContext()) // 30분 간격으로 반복 알람 설정
-            } else { // Switch OFF
+                setRepeatingAlarm(requireContext())
+            } else {
                 showToast("Alarm is OFF")
-                cancelRepeatingAlarm() // 반복 알람 취소
+                cancelRepeatingAlarm()
             }
         }
 
-        val languages = arrayOf(
-            getString(R.string.lang1),
-            getString(R.string.lang2)
-        )
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        languageSpinner.adapter = adapter
+        // 언어 변환 버튼
+        val languageButton = rootView.findViewById<Button>(R.id.language_eng_btn)
+        languageButton.setOnClickListener {
+            changeLanguage(it)
+        }
 
         alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         timer = Timer()
@@ -107,5 +104,58 @@ class SettingFragment : Fragment() {
         // 반복 알람 및 타이머 취소
         timer.cancel()
         timer.purge()
+    }
+
+    // 언어 저장하는 함수
+    private fun saveSelectedLanguage(selectedLanguage: String) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        preferences.edit().putString(PREF_SELECTED_LANGUAGE, selectedLanguage).apply()
+    }
+
+    private fun getSelectedLanguage(): String {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val loadedLanguage = preferences.getString(PREF_SELECTED_LANGUAGE, "") ?: ""
+        return loadedLanguage
+    }
+
+    private fun setLanguage(selectedLanguage: String) {
+        // 언어 저장
+        saveSelectedLanguage(selectedLanguage)
+
+        // 선택된 언어에 따라 언어 변경
+        setLocale(selectedLanguage)
+
+        // 액티비티에 언어 변경을 알림
+        (activity as? AppCompatActivity)?.supportActionBar?.title =
+            getString(R.string.nav2) // 액티비티의 타이틀을 갱신
+        activity?.recreate() // 액티비티 다시 생성하여 변경된 언어 반영
+    }
+
+    fun changeLanguage(view: View) {
+        val currentLanguage = getSelectedLanguage()
+        val targetLanguage = if (currentLanguage == "ko") "en" else "ko"
+        setLanguage(targetLanguage)
+
+        // 화면에 표시된 내용 다시 로드
+        reloadFragment()
+    }
+
+    private fun reloadFragment() {
+        val ft = requireFragmentManager().beginTransaction()
+        ft.detach(this).attach(this).commit()
+    }
+
+    // 언어 변경 함수
+    private fun setLocale(languageCode: String) {
+        if (languageCode.isNotEmpty()) {
+            val locale = Locale(languageCode)
+            Locale.setDefault(locale)
+
+            val resources = requireContext().resources
+            val configuration = Configuration(resources.configuration)
+            configuration.setLocale(locale)
+
+            resources.updateConfiguration(configuration, resources.displayMetrics)
+        }
     }
 }
