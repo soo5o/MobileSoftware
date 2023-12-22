@@ -37,11 +37,10 @@ class RecordDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 다이얼로그의 닫기 버튼
-        fname = arguments?.getString(ARG_DATA).toString() //db에 들어갈 filename
         csBtn = view.findViewById(R.id.cancelBtn)
         saveBtn = view.findViewById(R.id.saveBtn)
         recordText = view.findViewById(R.id.inputRecord)
+        fname = arguments?.getString(ARG_DATA).toString() //filename: uid+date
         MyApplication.db.collection("record")
             .document("$fname")
             .get()
@@ -91,6 +90,5 @@ class RecordDialogFragment : DialogFragment() {
             .addOnFailureListener {
                 Log.d("runTo", "record data save error", it)
             }
-
     }
 }

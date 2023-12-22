@@ -90,8 +90,6 @@ class SignActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(baseContext, "회원가입 실패", Toast.LENGTH_SHORT).show()
                         }
-                    }.addOnFailureListener {
-                        Log.d("runTo", "버튼 왜 안눌림? 실패")
                     }
             }
         }

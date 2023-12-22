@@ -87,8 +87,6 @@ class EditProfileFragment : Fragment() {
         val user = Firebase.auth.currentUser
         changeProfileText.setOnClickListener {
             Log.d("runTo", "프로필 사진 변경")
-            //사진 선택 변경 후 -> changeProfile.setImageBitmap(bitmap) 의 이미지가 바뀜
-            //사진 선택 안하면 변경이 안되고 그대로
             requestGalleryLauncher.launch(Intent(Intent.ACTION_PICK).apply {
                 type = MediaStore.Images.Media.CONTENT_TYPE
             })
@@ -96,7 +94,7 @@ class EditProfileFragment : Fragment() {
         changeProfileBtn.setOnClickListener {
             uploadImage(userId)
         }
-        editNick.setOnClickListener {  //닉네임 변경은 되지만 네비게이션 헤더의 닉네임은 변경되지 않음 *수정*
+        editNick.setOnClickListener {
             if (changeNick.text.toString().isEmpty()) {
                 //닉네임이 입력되지 않은 경우
                 Toast.makeText(requireContext(), "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()

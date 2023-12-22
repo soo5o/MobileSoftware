@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "빈칸을 채워주세요", Toast.LENGTH_SHORT).show()
             } else {
-                Log.d("runTo", "email:$email, password:$password")
                 MyApplication.auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         binding.inputEmail.text.clear()

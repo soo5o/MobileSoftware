@@ -73,7 +73,6 @@ class CalendarFragment : Fragment() {
             fabMain.visibility = View.VISIBLE
             fabEdit.visibility = View.VISIBLE
             fabRemove.visibility = View.VISIBLE
-            //checkDay(year, month, dayOfMonth)
             fname = "$userId$year-${month + 1}$dayOfMonth"
             val storage = MyApplication.storage
             val storageRef = storage.reference
@@ -145,7 +144,7 @@ class CalendarFragment : Fragment() {
         val storage = MyApplication.storage
         val storageRef = storage.reference
         val imgRef = storageRef.child("recordImages/${fname}.jpg")
-        val file = Uri.fromFile(File(filePath)) //filePth 오류
+        val file = Uri.fromFile(File(filePath))
         Log.d("runTo", "fname : $fname, filePath : $filePath")
         imgRef.putFile(file)
             .addOnSuccessListener {
