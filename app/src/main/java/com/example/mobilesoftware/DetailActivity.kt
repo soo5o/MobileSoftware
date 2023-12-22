@@ -11,7 +11,6 @@ import java.util.Calendar
 import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityDetailBinding
     private val commentsList = mutableListOf<Comment>()
     private lateinit var commentAdapter: CommentAdapter
