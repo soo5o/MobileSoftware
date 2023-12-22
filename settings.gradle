@@ -15,6 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "MobileSoftware"
 include ':app'
-include ':calendartest'
-include ':test'
-include ':tabtest'
