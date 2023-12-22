@@ -4,9 +4,7 @@ import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobilesoftware.databinding.ActivityDetailBinding
 import java.util.Calendar
@@ -41,14 +39,8 @@ class DetailActivity : AppCompatActivity() {
         commentAdapter = CommentAdapter(commentsList)
         binding.commentRecyclerView.adapter = commentAdapter
         binding.commentRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        // 테스트 코드
-        val sampleComment = Comment("SampleUser", "This is a sample comment", System.currentTimeMillis())
-        commentsList.add(sampleComment)
-        commentAdapter.notifyDataSetChanged()
     }
 
-    // 댓로가기 버튼을 눌렀을 때의 동작 설정
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
